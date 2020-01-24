@@ -1,6 +1,6 @@
 const fs = require('fs');
 const core = require('@actions/core');
-const { GitHub } = require('@actions/github');
+const { GitHub, context } = require('@actions/github');
 
 function extractReleaseNote(filePathReleaseNote) {
     const body = fs.readFileSync(filePathReleaseNote, {encoding: 'utf8'});
