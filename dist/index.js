@@ -4139,7 +4139,7 @@ async function checkLatestReleaseUpdated(releaseNote) {
         repo,
         tag: releaseNote.tag_name,
     });
-    console.log(resp);
+    console.log(resp.status);
     if (resp.status === 200) {
         throw new Error(`Already exists this tag_name '${releaseNote.tag_name}'`);
     }
