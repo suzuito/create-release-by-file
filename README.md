@@ -1,12 +1,14 @@
-# Hello world javascript action
-
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
+# Create a Release by release note file action
 
 ## Inputs
 
-### `who-to-greet`
+### `release_note`
 
-**Required** The name of the person to greet. Default `"World"`.
+**Option** The file path of release note. Default `"RELEASE.md"`.
+
+### `prefix`
+
+**Option** The prefix of release line. Default `"# "`.
 
 ## Outputs
 
