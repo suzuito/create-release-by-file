@@ -12,12 +12,12 @@ async function checkLatestReleaseUpdated(releaseNote) {
         repo,
         tag: releaseNote.tag_name,
     });
+    console.log(resp);
     if (resp.status === 200) {
         throw new Error(`Already exists this tag_name '${releaseNote.tag_name}'`);
     }
     if (resp.status !== 404) {
-        // throw new Error(`Octkit request is failed: ${resp.status}, ${resp.data}`);
-        throw new Error(resp);
+        throw new Error(`Octkit request is failed: ${resp.status}, ${resp.data}`);
     }
 }
 
