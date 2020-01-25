@@ -4187,7 +4187,7 @@ if (require.main === require.cache[eval('__filename')]) {
         process.exit(1)
     }
     const releaseNote = c.extractReleaseNote(
-        fs.readFileSync(release_file_path),
+        fs.readFileSync(release_file_path, { encoding: 'utf8' }),
         prefix,
     );
     checkLatestReleaseUpdated(releaseNote);
