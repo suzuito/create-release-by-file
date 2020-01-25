@@ -42,7 +42,7 @@ async function postCreateRelease(releaseNote) {
 
 module.exports.postCreateRelease = postCreateRelease;
 
-if (require.main === module) {
+async function main() {
     let release_file_path = core.getInput('release_note', { required: false });
     if (!release_file_path) {
         release_file_path = 'RELEASE.md';
@@ -68,4 +68,8 @@ if (require.main === module) {
     if (!checkOnly) {
         await postCreateRelease(releaseNote);
     }
+}
+
+if (require.main === module) {
+    main();
 }
