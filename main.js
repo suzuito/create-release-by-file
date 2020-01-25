@@ -4,10 +4,10 @@ const { GitHub, context } = require('@actions/github');
 
 const c = require('./create_release');
 
-function checkLatestReleaseUpdated(releaseNote) {
+async function checkLatestReleaseUpdated(releaseNote) {
     const { owner, repo } = context.repo;
     const github = new GitHub(process.env.GITHUB_TOKEN);
-    const resp = github.repos.getReleaseByTag({
+    const resp = await github.repos.getReleaseByTag({
         owner,
         repo,
         tag: releaseNote.tag_name,
@@ -21,11 +21,11 @@ function checkLatestReleaseUpdated(releaseNote) {
     }
 }
 
-function postCreateRelease(releaseNote) {
+async function postCreateRelease(releaseNote) {
     try {
         const { owner, repo } = context.repo;
         const github = new GitHub(process.env.GITHUB_TOKEN);
-        const resp = github.repos.createRelease({
+        const resp = await github.repos.createRelease({
             owner,
             repo,
             tag_name: releaseNote.tag_name,
@@ -64,8 +64,8 @@ if (require.main === module) {
         fs.readFileSync(release_file_path, { encoding: 'utf8' }),
         prefix,
     );
-    checkLatestReleaseUpdated(releaseNote);
+    await checkLatestReleaseUpdated(releaseNote);
     if (!checkOnly) {
-        postCreateRelease(releaseNote);
+        await postCreateRelease(releaseNote);
     }
 }
