@@ -1,0 +1,12 @@
+name: release
+on:
+  push:
+    branches:
+      - 'master'
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: suzuito/create-release-by-file@v0.0.4
