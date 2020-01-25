@@ -4169,11 +4169,21 @@ function postCreateRelease(releaseNote) {
 module.exports.postCreateRelease = postCreateRelease;
 
 if (require.main === require.cache[eval('__filename')]) {
-    const release_file_path = core.getInput('release_note', { required: false });
-    const prefix = core.getInput('prefix', { required: false });
-    const checkOnly = core.getInput('check_only', { required: false });
+    let release_file_path = core.getInput('release_note', { required: false });
+    if (!release_file_path) {
+        release_file_path = 'RELEASE.md';
+    }
+    let prefix = core.getInput('prefix', { required: false });
+    if (!prefix) {
+        prefix = '# ';
+    }
+    let checkOnly = core.getInput('check_only', { required: false });
+    if (!checkOnly) {
+        checkOnly = 'false';
+    }
+    checkOnly = checkOnly === 'true';
     if (!fs.existsSync(release_file_path)) {
-        console.log(`Release not '${release_file_path}' is not found`);
+        console.log(`Release note '${release_file_path}' is not found`);
         process.exit(1)
     }
     const releaseNote = c.extractReleaseNote(
