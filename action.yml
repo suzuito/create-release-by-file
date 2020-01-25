@@ -10,6 +10,10 @@ inputs:
     description: 'Prefix for release line.'
     required: false
     default: '# '
+  check_only:
+    description: 'The flag to check whether release note is updated or not.'
+    required: false
+    default: false
 outputs:
   id:
     description: 'The ID of the created Release'
