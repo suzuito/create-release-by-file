@@ -45,6 +45,10 @@ if (require.main === module) {
     const release_file_path = core.getInput('release_note', { required: false });
     const prefix = core.getInput('prefix', { required: false });
     const checkOnly = core.getInput('check_only', { required: false });
+    if (!fs.existsSync(release_file_path)) {
+        console.log(`Release not '${release_file_path}' is not found`);
+        process.exit(1)
+    }
     const releaseNote = c.extractReleaseNote(
         fs.readFileSync(release_file_path),
         prefix,
