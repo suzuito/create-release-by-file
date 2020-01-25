@@ -4131,10 +4131,10 @@ const { GitHub, context } = __webpack_require__(469);
 
 const c = __webpack_require__(789);
 
-function checkLatestReleaseUpdated(releaseNote) {
+async function checkLatestReleaseUpdated(releaseNote) {
     const { owner, repo } = context.repo;
     const github = new GitHub(process.env.GITHUB_TOKEN);
-    const resp = github.repos.getReleaseByTag({
+    const resp = await github.repos.getReleaseByTag({
         owner,
         repo,
         tag: releaseNote.tag_name,
@@ -4148,11 +4148,11 @@ function checkLatestReleaseUpdated(releaseNote) {
     }
 }
 
-function postCreateRelease(releaseNote) {
+async function postCreateRelease(releaseNote) {
     try {
         const { owner, repo } = context.repo;
         const github = new GitHub(process.env.GITHUB_TOKEN);
-        const resp = github.repos.createRelease({
+        const resp = await github.repos.createRelease({
             owner,
             repo,
             tag_name: releaseNote.tag_name,
@@ -4169,7 +4169,7 @@ function postCreateRelease(releaseNote) {
 
 module.exports.postCreateRelease = postCreateRelease;
 
-if (require.main === require.cache[eval('__filename')]) {
+async function main() {
     let release_file_path = core.getInput('release_note', { required: false });
     if (!release_file_path) {
         release_file_path = 'RELEASE.md';
@@ -4191,10 +4191,14 @@ if (require.main === require.cache[eval('__filename')]) {
         fs.readFileSync(release_file_path, { encoding: 'utf8' }),
         prefix,
     );
-    checkLatestReleaseUpdated(releaseNote);
+    await checkLatestReleaseUpdated(releaseNote);
     if (!checkOnly) {
-        postCreateRelease(releaseNote);
+        await postCreateRelease(releaseNote);
     }
+}
+
+if (require.main === require.cache[eval('__filename')]) {
+    main();
 }
 
 /***/ }),
