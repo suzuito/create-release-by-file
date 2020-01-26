@@ -17,7 +17,7 @@ async function checkLatestReleaseUpdated(releaseNote) {
         console.log(`Latest release note: ${resp.data.upload_url}`);
         throw new Error(`Already exists this tag_name '${releaseNote.tag_name}'`);
     } catch (error) {
-        // console.log(JSON.stringify(error));
+        console.log(JSON.stringify(error));
         if (error.status !== 404) {
             throw new Error(`Octkit request is failed: ${resp.status}, ${resp.data}`);
         }
