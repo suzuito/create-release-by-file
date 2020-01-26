@@ -9,8 +9,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - run: ls -la
-      - run: pwd
       - run: npm install
       - run: npm test
   release:
