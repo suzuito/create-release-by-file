@@ -19,6 +19,7 @@ async function checkLatestReleaseUpdated(releaseNote) {
         throw new Error(`Octkit request is failed: ${resp.status}, ${resp.data}`);
     }
     console.log(`Latest release note: ${resp.data.upload_url}`);
+    return;
 }
 
 async function postCreateRelease(releaseNote) {
@@ -71,10 +72,12 @@ async function main() {
         fs.readFileSync(release_file_path, { encoding: 'utf8' }),
         prefix,
     );
+    console.log(5);
     await checkLatestReleaseUpdated(releaseNote);
     if (!checkOnly) {
         await postCreateRelease(releaseNote);
     }
+    console.log('10');
 }
 
 if (require.main === module) {

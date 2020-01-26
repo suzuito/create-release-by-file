@@ -31,8 +31,8 @@ describe('Release note', () => {
 
         GitHub.mockImplementation(() => github);
     });
-    it('', () => {
-        postCreateRelease({
+    it('', async () => {
+        await postCreateRelease({
             tag_name: 'v0.0.1',
             body: 'Hello world!',
         })
