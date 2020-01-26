@@ -52,4 +52,6 @@ with:
   release_note: ./docs/RELEASE.txt
   prefix: '* '
   check_only: false
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
