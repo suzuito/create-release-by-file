@@ -6,7 +6,7 @@ const c = require('./create_release');
 
 class ReleaseAlreadyExistsError extends Error {
     constructor(tagName) {
-        super(`Already exists this tag_name '${tagName}'`);
+        super(`Already exists this tag_name '${tagName}'. Update release note.`);
     }
 }
 

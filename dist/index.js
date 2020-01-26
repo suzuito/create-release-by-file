@@ -4133,7 +4133,7 @@ const c = __webpack_require__(789);
 
 class ReleaseAlreadyExistsError extends Error {
     constructor(tagName) {
-        super(`Already exists this tag_name '${tagName}'`);
+        super(`Already exists this tag_name '${tagName}'. Update release note.`);
     }
 }
 
