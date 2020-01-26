@@ -18,6 +18,7 @@ async function checkLatestReleaseUpdated(releaseNote) {
     if (resp.status !== 404) {
         throw new Error(`Octkit request is failed: ${resp.status}, ${resp.data}`);
     }
+    console.log(`Latest release note: ${resp.data.upload_url}`);
 }
 
 async function postCreateRelease(releaseNote) {
