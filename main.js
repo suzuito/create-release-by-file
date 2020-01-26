@@ -57,9 +57,6 @@ async function postCreateRelease(releaseNote) {
         name: releaseNote.name,
         body: releaseNote.body,
     });
-    core.setOutput('id', resp.data.id);
-    core.setOutput('html_url', resp.data.html_url);
-    core.setOutput('upload_url', resp.data.upload_url);
     console.log(`Done: ${resp.data.upload_url}`);
 }
 
