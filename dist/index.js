@@ -4139,7 +4139,6 @@ async function checkLatestReleaseUpdated(releaseNote) {
         repo,
         tag: releaseNote.tag_name,
     });
-    console.log(resp.status);
     if (resp.status === 200) {
         throw new Error(`Already exists this tag_name '${releaseNote.tag_name}'`);
     }
@@ -4152,6 +4151,12 @@ async function postCreateRelease(releaseNote) {
     try {
         const { owner, repo } = context.repo;
         const github = new GitHub(process.env.GITHUB_TOKEN);
+        console.log('New release note\n============');
+        console.log(releaseNote.body);
+        console.log('============');
+        console.log(`owner   :${owner}`);
+        console.log(`repo    :${repo}`);
+        console.log(`tag_name:${releaseNote.tag_name}`);
         const resp = await github.repos.createRelease({
             owner,
             repo,
@@ -4162,6 +4167,7 @@ async function postCreateRelease(releaseNote) {
         core.setOutput('id', resp.data.id);
         core.setOutput('html_url', resp.data.html_url);
         core.setOutput('upload_url', resp.data.upload_url);
+        console.log(`Done: ${resp.data.upload_url}`);
     } catch (error) {
         core.setFailed(error.message);
     }
