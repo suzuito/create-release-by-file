@@ -2,7 +2,7 @@ name: 'Create a Release by file'
 description: 'Create a release for a tag in your repository'
 author: 'GitHub'
 inputs:
-  release_file_path:
+  release_note:
     description: 'The path of the file. This file should include release note by Markdown format.'
     required: false
     default: 'RELEASE.md'
