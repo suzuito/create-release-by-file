@@ -4134,16 +4134,21 @@ const c = __webpack_require__(789);
 async function checkLatestReleaseUpdated(releaseNote) {
     const { owner, repo } = context.repo;
     const github = new GitHub(process.env.GITHUB_TOKEN);
-    const resp = await github.repos.getReleaseByTag({
-        owner,
-        repo,
-        tag: releaseNote.tag_name,
-    });
+    let resp = null;
+    try {
+        resp = await github.repos.getReleaseByTag({
+            owner,
+            repo,
+            tag: releaseNote.tag_name,
+        });
+    } catch (error) {
+        console.log(JSON.stringify(error));
+        if (error.status !== 404) {
+            throw new Error(`Octkit request is failed: ${resp.status}, ${resp.data}`);
+        }
+    }
     if (resp.status === 200) {
         throw new Error(`Already exists this tag_name '${releaseNote.tag_name}'`);
-    }
-    if (resp.status !== 404) {
-        throw new Error(`Octkit request is failed: ${resp.status}, ${resp.data}`);
     }
     console.log(`Latest release note: ${resp.data.upload_url}`);
     return;
