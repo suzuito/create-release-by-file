@@ -4,23 +4,39 @@ const { GitHub, context } = require('@actions/github');
 
 const c = require('./create_release');
 
+class ReleaseAlreadyExistsError extends Error {
+    constructor(tagName) {
+        super(`Already exists this tag_name '${tagName}'`);
+    }
+}
+
+class OctkitRequestFailedError extends Error {
+    constructor(status, body) {
+        super(`Octkit request is failed: ${status}, ${body}`);
+    }
+}
+
 async function checkLatestReleaseUpdated(releaseNote) {
     const { owner, repo } = context.repo;
     const github = new GitHub(process.env.GITHUB_TOKEN);
     let resp = null;
+    let error = null;
     try {
         resp = await github.repos.getReleaseByTag({
             owner,
             repo,
             tag: releaseNote.tag_name,
         });
-        console.log(`Latest release note: ${resp.data.upload_url}`);
-        throw new Error(`Already exists this tag_name '${releaseNote.tag_name}'`);
-    } catch (error) {
+        console.log(`Latest release note: ${resp.data.html_url}`);
+        error = new ReleaseAlreadyExistsError(releaseNote.tag_name);
+    } catch (e) {
         console.log(JSON.stringify(error));
-        if (error.status !== 404) {
-            throw new Error(`Octkit request is failed: ${resp.status}, ${resp.data}`);
+        if (e.status !== 404) {
+            error = new OctkitRequestFailedError(e.status, e.data);
         }
+    }
+    if (error) {
+        throw error;
     }
     return;
 }
