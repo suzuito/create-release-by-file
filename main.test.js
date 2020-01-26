@@ -43,9 +43,6 @@ describe('Release note', () => {
             repo: 'repo',
             name: undefined,
         });
-        expect(core.setOutput).toHaveBeenNthCalledWith(1, 'id', 'releaseId');
-        expect(core.setOutput).toHaveBeenNthCalledWith(2, 'html_url', 'htmlUrl');
-        expect(core.setOutput).toHaveBeenNthCalledWith(3, 'upload_url', 'uploadUrl');
         expect(core.setFailed).toHaveBeenCalledTimes(0);
     });
 });
