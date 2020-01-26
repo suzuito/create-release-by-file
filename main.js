@@ -30,7 +30,7 @@ async function checkLatestReleaseUpdated(releaseNote) {
         console.log(`Latest release note: ${resp.data.html_url}`);
         error = new ReleaseAlreadyExistsError(releaseNote.tag_name);
     } catch (e) {
-        console.log(JSON.stringify(e));
+        // console.log(JSON.stringify(e));
         if (e.status !== 404) {
             error = new OctkitRequestFailedError(e.status, e.data);
         }
