@@ -4150,29 +4150,25 @@ async function checkLatestReleaseUpdated(releaseNote) {
 }
 
 async function postCreateRelease(releaseNote) {
-    try {
-        const { owner, repo } = context.repo;
-        const github = new GitHub(process.env.GITHUB_TOKEN);
-        console.log('New release note\n============');
-        console.log(releaseNote.body);
-        console.log('============');
-        console.log(`owner   :${owner}`);
-        console.log(`repo    :${repo}`);
-        console.log(`tag_name:${releaseNote.tag_name}`);
-        const resp = await github.repos.createRelease({
-            owner,
-            repo,
-            tag_name: releaseNote.tag_name,
-            name: releaseNote.name,
-            body: releaseNote.body,
-        });
-        core.setOutput('id', resp.data.id);
-        core.setOutput('html_url', resp.data.html_url);
-        core.setOutput('upload_url', resp.data.upload_url);
-        console.log(`Done: ${resp.data.upload_url}`);
-    } catch (error) {
-        core.setFailed(error.message);
-    }
+    const { owner, repo } = context.repo;
+    const github = new GitHub(process.env.GITHUB_TOKEN);
+    console.log('New release note\n============');
+    console.log(releaseNote.body);
+    console.log('============');
+    console.log(`owner   :${owner}`);
+    console.log(`repo    :${repo}`);
+    console.log(`tag_name:${releaseNote.tag_name}`);
+    const resp = await github.repos.createRelease({
+        owner,
+        repo,
+        tag_name: releaseNote.tag_name,
+        name: releaseNote.name,
+        body: releaseNote.body,
+    });
+    core.setOutput('id', resp.data.id);
+    core.setOutput('html_url', resp.data.html_url);
+    core.setOutput('upload_url', resp.data.upload_url);
+    console.log(`Done: ${resp.data.upload_url}`);
 }
 
 module.exports.postCreateRelease = postCreateRelease;
@@ -4199,7 +4195,7 @@ async function main() {
         fs.readFileSync(release_file_path, { encoding: 'utf8' }),
         prefix,
     );
-    console.log(5);
+    console.log('5');
     await checkLatestReleaseUpdated(releaseNote);
     if (!checkOnly) {
         await postCreateRelease(releaseNote);
@@ -4208,7 +4204,7 @@ async function main() {
 }
 
 if (require.main === require.cache[eval('__filename')]) {
-    main();
+    main().catch(error => core.setFailed(error.message));
 }
 
 /***/ }),
