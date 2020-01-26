@@ -4157,7 +4157,7 @@ async function checkLatestReleaseUpdated(releaseNote) {
         console.log(`Latest release note: ${resp.data.html_url}`);
         error = new ReleaseAlreadyExistsError(releaseNote.tag_name);
     } catch (e) {
-        console.log(JSON.stringify(error));
+        // console.log(JSON.stringify(e));
         if (e.status !== 404) {
             error = new OctkitRequestFailedError(e.status, e.data);
         }
@@ -4174,9 +4174,9 @@ async function postCreateRelease(releaseNote) {
     console.log('New release note\n============');
     console.log(releaseNote.body);
     console.log('============');
-    console.log(`owner   :${owner}`);
-    console.log(`repo    :${repo}`);
-    console.log(`tag_name:${releaseNote.tag_name}`);
+    console.log(`owner   : ${owner}`);
+    console.log(`repo    : ${repo}`);
+    console.log(`tag_name: ${releaseNote.tag_name}`);
     const resp = await github.repos.createRelease({
         owner,
         repo,
