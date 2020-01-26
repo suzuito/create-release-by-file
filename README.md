@@ -1,3 +1,5 @@
+![test](https://github.com/suzuito/create-release-by-file/workflows/test/badge.svg?branch=master&event=push)
+
 # Create a Release by release note file action
 
 This GitHub action creates release tag from release note file.
