@@ -21,7 +21,7 @@ function extractReleaseNote(
         const result = e.exec(l);
         if (result !== null) {
             if (ret.tag_name === '') {
-                ret.tag_name = result[1]
+                ret.tag_name = result[1].trim();
                 latest_messages.push(l);
             } else {
                 break;
